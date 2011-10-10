@@ -1,6 +1,6 @@
 module(..., package.seeall)
 
-function newCatapult( _x, _y, teamColor )
+function newCatapult( _x, _y, poleOffsetX, poleOffsetY, ballOffsetX, ballOffsetY, teamColor )
 	
 --Groupe visible
 --Visible Group
@@ -11,7 +11,7 @@ poteau_haut.x = _x; poteau_haut.y = _y; poteau_haut:scale(2,2)
 slingshot_container:insert(poteau_haut)
 
 local poteau_bas = display.newImage("slingshot_pole_unique.png")
-poteau_bas.x = _x; poteau_bas.y = _y + 200; poteau_bas:scale(2,2)
+poteau_bas.x = _x+poleOffsetX; poteau_bas.y = _y + poleOffsetY; poteau_bas:scale(2,2)
 slingshot_container:insert(poteau_bas)
 
 local elastique = display.newLine(poteau_haut.x, poteau_haut.y, poteau_bas.x, poteau_bas.y)
@@ -24,7 +24,7 @@ slingshot_container:insert(elastique)
 --On cree notre boule de neige
 --We make our ball projectile
 local ball = projectile.newProjectile()
-ball.x = _x; ball.y = _y+100
+ball.x = _x+ballOffsetX; ball.y = _y + ballOffsetY
 slingshot_container:insert(ball)
 
 --On crée la cible vituelle autour de la balle
@@ -151,8 +151,8 @@ local function toucheLimite( event )
 	if ball.x > display.contentWidth+200 or ball.x < -200 or ball.y < -200 or ball.y > display.contentHeight+200 then
     ball:setLinearVelocity(0,0)
     ball.angularVelocity = 0
-	ball.x = _x
-	ball.y = _y+100
+	ball.x = _x+ ballOffsetX
+	ball.y = _y + ballOffsetY
 
 	end	
 end
